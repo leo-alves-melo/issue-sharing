@@ -1,5 +1,4 @@
-export async function GET() {
-    const items = [
+let items = [
     {
         id: 1,
         title: "First Item",
@@ -25,7 +24,22 @@ export async function GET() {
         title: "Fifth Item",
         description: "Description for fifth item"
     }
-    ]
+]
 
+export async function GET() {
     return Response.json(items)
+}
+
+export async function POST(request) {
+    const body = await request.json()
+
+    const newItem = {
+        id: Date.now(),
+        title: body.title,
+        description: body.description
+    }
+
+    items.push(newItem)
+
+    return Response.json(newItem, { status: 201 })
 }
